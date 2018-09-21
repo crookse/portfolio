@@ -244,14 +244,14 @@ function getTemplateData(resource, isStatic = false) {
   if (ENV_CONF.build_conf.bust_cache_for_assets) {
     frontEndVars.asset_version = new Date().getTime();
   }
-  
+
   frontEndVars.html_document_title = `${ENV_CONF.app_conf.app_name}`;
+  if (resource.html_document_title) {
+    frontEndVars.html_document_title += ` / ${resource.html_document_title}`;
+  }
 
   switch (ENV_CONF.app_conf.environment.toLowerCase()) {
     case 'development':
-      if (resource.html_document_title) {
-        frontEndVars.html_document_title += ` / ${resource.html_document_title}`;
-      }
       break;
   }
 
