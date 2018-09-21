@@ -1,0 +1,13 @@
+extends extendable.portfolio.pug
+
+block main
+	div.c-slide.c-slide-about-work
+		div.container
+			div.row
+				div.col
+					h2.c-heading.c-heading--style-2 Payoneer Escrow Noderig
+			div.row
+				div.col
+					p The Noderig is an internal testing application used to test Payoneer Escrow's API, webhooks feature, and authenticated lightboxes. It helps streamline front-end development, debugging, and QA testing across multiple browsers and devices.
+					p I originally built this application to serve one purpose: to help me make sure the authenticated lightboxes look nice and work as expected in desktop viewport sizes. As the front-end expert on the Payoneer Escrow team, I found it difficult to design the authenticated lightboxes and test them in an environment that simulated the real UX as close as possible. This difficulty led to the creation of the Noderig. I added more features over time and it became a full-fledged testing environment–allowing the team to perform end-to-end testing in an environment that simulates the real UX.
+	include slide.work-samples.pug

@@ -1,0 +1,32 @@
+{
+  "name": "crookse-portfolio",
+  "version": "1.0.0",
+  "description": "Eric Crooks' Portfolio",
+  "main": "index.js",
+  "dependencies": {
+    "crookse-node": "^1.5.3",
+    "frozenv": "^1.0.3",
+    "pug": "^2.0.3",
+    "serve-static": "^1.13.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon index.js",
+    "sass-build": "sass public/assets/css/style.scss public/assets/css/style.css --sourcemap=none --style=compressed",
+    "sass-watch": "sass --watch public/assets/css/:public/assets/css/ --sourcemap=none --style=compressed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crookse/portfolio.git"
+  },
+  "author": "Eric Crooks",
+  "license": "MIT",
+  "nodemonConfig": {
+    "ext": "js,json,jsx,pug,scss,txt",
+    "ignore": "build/*"
+  },
+  "bugs": {
+    "url": "https://github.com/crookse/portfolio/issues"
+  },
+  "homepage": "https://github.com/crookse/portfolio#readme"
+}

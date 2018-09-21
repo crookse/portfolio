@@ -1,0 +1,14 @@
+header.c-header
+	div.container
+		div.row.align-items-center
+			div.col
+				a.c-logo-link(href="/")
+					img.c-image.c-image-gravatar(:src="app_conf.base_url + '/public/assets/img/gravatar.png'")
+					h1.c-logo-heading crookse
+						span(v-if="app_conf.environment")  ({{ app_conf.environment }})
+			div.col
+				nav.c-nav.text-align--right
+					a.c-nav__link.scroll-to(href="/#slide__work", data-jquery-element="#slide__work") Web Dev
+					a.c-nav__link.scroll-to(href="/#slide__projects", data-jquery-element="#slide__projects") Projects
+					a.c-nav__link.scroll-to(href="/#slide__contact", data-jquery-element="#slide__contact") Contact
+					a.c-nav__link(:href="app_conf.resume_link") Resume

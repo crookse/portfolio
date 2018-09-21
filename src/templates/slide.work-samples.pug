@@ -1,0 +1,13 @@
+div.c-slide.c-slide-work-samples
+	div.container
+		div.row
+			div.col
+				h2.c-heading.c-heading--style-2 Samples
+		div.c-slide-work-samples__sample(v-for="sample in samples")
+			div.row
+				div.col-md-4.col-sm-12
+					h3 {{ sample.title }}
+					p {{ sample.description }}
+				div.col-md-8.col-sm-12
+					img(:src="app_conf.base_url + sample.screenshot_url")
+			hr

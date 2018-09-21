@@ -1,0 +1,46 @@
+.c-heading {
+}
+    //
+    // Modifier: stlye-1
+    //
+    // These headings have a bottom border with 4rems of white space.
+    //
+    .c-heading--style-1 {
+        border-bottom: 1px solid $g_color_border;
+        margin-bottom: rem(4);
+        padding-bottom: rem(4);
+    }
+    //
+    // Modifier: style-2
+    //
+    // Style with that red.
+    //
+    .c-heading--style-2 {
+        background: $g_color_that_red;
+        color: #ffffff;
+        display:  inline-block;
+        font-size: 4rem;
+        font-style: italic;
+        margin-bottom: 4rem;
+        padding: 0;
+        text-transform:  uppercase;
+    }
+
+
+
+
+//
+// A heading container
+//
+.page-heading-container {
+    margin-bottom: rem(3);
+    //
+    // Headings that go under an h2 heading
+    //
+    .subheading {
+        display: block;
+        font-size: 1.2rem;
+        font-weight: normal;
+        margin-top: rem(1);
+    }
+}

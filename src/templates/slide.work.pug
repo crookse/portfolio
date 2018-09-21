@@ -1,0 +1,18 @@
+div#slide__work.c-slide.c-slide-work
+	div.container
+		div.row
+			div.col
+				h2.c-heading.c-heading--style-2 Web Dev
+		div.c-slide-work__piece(v-for="piece in work")
+			div.row
+				div.col-md-4.col-sm-12
+					h3 {{ piece.title }}
+					p {{ piece.dates }}
+					p {{ piece.description }}
+					hr
+					div.buttons-container
+						a.btn.btn-primary(:href="piece.about_url", v-if="piece.about_url") About
+						a.btn.btn-primary(:href="piece.live_url", v-if="piece.live_url", target="_BLANK") Launch
+						a.btn.btn-primary(:href="piece.static_url", v-if="piece.static_url", target="_BLANK") View Static
+				div.col-md-8.col-sm-12
+					img(:src="app_conf.base_url + piece.screenshot_url")

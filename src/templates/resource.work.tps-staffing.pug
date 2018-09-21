@@ -1,0 +1,36 @@
+extends extendable.portfolio.pug
+
+block main
+	div.c-slide.c-slide-about-work
+		div.container
+			div.row
+				div.col
+					h2.c-heading.c-heading--style-2 TPS Staffing
+			div.row
+				div.col
+					p I designed and developed this application for my senior project (CIS 470) at DeVry University. The front-end and back-end were developed by me in accordance with UMLs, use case diagrams, and data flow diagrams. The MySQL database schema was written by my teammate in charge of data architecture and implemented by me. Coding the senior project was not required due to the course being eight weeks long with seven weeks to complete the project, but I felt that the project could be coded within that timeframe.
+			hr
+			div.row
+				div.col
+					h3 Project Requirements
+					p
+						strong About Taylor Professional Services IT Temporary Services (TPS)
+					p TPS is an Information Technology staffing service. When a TPS client company determines that it will need a temporary IT professional, it issues a staffing request to one of the TPS staffing agents.
+					p
+						strong Requirements Summary
+					p TPS wants to improve its services by providing an online system for filling staffing requests. Currently, all staffing requests are made through the phone. Requests will include a short description of the job, skill(s) needed, offered salary, job location, and the date and duration of the job. A list of qualifying candidates (if any) will be sent to the client. Staffing agents will ensure each request is processed successfully by providing oversight of all requests.
+					p
+						strong Detailed Requirements (steps)
+					ol
+						li Client fills out and submits staffing request.
+						li System searches for qualifying candidates based on information from the request and provides a list of all qualifying candidates to the client. The list will contain the candidate's Candidate ID Number, experience, preferred salary, education, and location.
+						li Client is notified to accept or decline staffing candidate list.
+							ul
+								li Client Accepts: Client prioritizes the candidate list by rearranging the order in which the candidates are listed (move on to next step).
+								li Client Declines: Staffing request is put on hold until a new list can be generated for the request. The new list will follow this step. The client has the option to close the request at this point.
+						li Client submits the candidate list and waits for the request to be filled by a candidate.
+						li The candidate at the top of the list is notified to accept or decline the offer.
+							ul
+								li Candidate Accepts: Staffing request is marked as "filled" in the system, the client is notified (notification will include candidate's contact details), and the system closes the request.
+								li Candidate Declines: Candidate provides reason, the client is notified, and the next candidate is placed at the top of the list. The next candidate will follow this step. Note: If all candidates decline the request, then the staffing request is put on hold until a new list can be generated for the request. The new list will follow Step 3. The client has the option to close the request at this point.
+	include slide.work-samples.pug

@@ -1,0 +1,75 @@
+$local_rem: rem(3);
+
+h1, h2, h3, h4, h5, h6, p, pre {
+    margin-bottom: $local_rem;
+}
+
+address {
+    font-style: italic;
+}
+
+body {
+    // font-family: 'Lato', Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    min-width: 320px;
+    background: #f4f4f4;
+    color: #333333;
+}
+
+code {
+    border-radius: $g-border-radius-pre-code;
+}
+code[class*="language-"] {
+    line-height: 1.7;
+    margin: 0;
+}
+pre code {
+    display: block;
+    font-size: rem(1.2);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	margin-top: 0;
+}
+
+html {
+    min-height: 320px;
+    min-width: 320px;
+}
+
+img {
+    margin-bottom: $local_rem;
+    max-width: 100%;
+}
+
+pre {
+    // border: 1px solid #cdcdcd;
+    border-radius: $g-border-radius-pre-code;
+}
+pre[class*="language-"] {
+    margin-bottom: $local_rem;
+}
+ul pre[class*="language-"],
+ol pre[class*="language-"] {
+    margin-bottom: rem(1);
+}
+
+ol,
+ul {
+    margin-bottom: $local_rem;
+}
+
+ul li,
+ol li,
+ul li p,
+ol li p {
+    margin-bottom: rem(1);
+}
+
+ul li ul,
+ul li ol,
+ol li ol,
+ol li ul {
+    margin-top: rem(1);
+}

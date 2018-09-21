@@ -1,0 +1,72 @@
+script(src=front_end_vars.app_conf.base_url + "/public/assets/vendor/jquery-3.3.1/jquery.min.js")
+script(src=front_end_vars.app_conf.base_url + "/public/assets/vendor/bootstrap-4.1.3-dist/js/bootstrap.min.js")
+//- Vue.js development version.
+script(src=front_end_vars.app_conf.base_url + front_end_vars.global_scripts.vue)
+script(src=front_end_vars.app_conf.base_url + "/public/assets/js/window.js?ver=" + front_end_vars.asset_version)
+//- Vue.js production version.
+//- script(src="https://cdn.jsdelivr.net/npm/vue.js")
+script(src=front_end_vars.app_conf.base_url + "/public/assets/js/resource-script.globals.js?ver=" + front_end_vars.asset_version)
+if front_end_vars.page_scripts
+	each page_script_url in front_end_vars.page_scripts
+		script(src=front_end_vars.app_conf.base_url + page_script_url + "?ver=" + front_end_vars.asset_version)
+//- script(src=body.app_conf.base_url + "/public/assets/js/scripts.js")
+script(type="text/javascript").
+	var vueAppOptions = {
+		el: "#app",
+		data: !{front_end_vars_stringified},
+		methods: Object.assign(app_vue.methods ? app_vue.method : {}, {
+			/**
+			 * Scroll to an element
+			 *
+			 * @param {Object} elementSelector The selector to identify the element
+			 * @param {Number} marginTop       Add some top margin.
+			 */
+			scrollToTop: function scrollToTop() {
+				scroll_to_element("body", 0, true);
+			},
+			/**
+			 * Open the sidebar
+			 *
+			 * TODO: Clean up... it works though.
+			 */
+			openSidebar: function openSidebar() {
+				if($(".c-btn-mobile").hasClass("open")) {
+					$(".c-btn-mobile").removeClass("open");
+					$(".c-btn-mobile .fa-bars").show();
+					$(".c-btn-mobile .fa-times").hide();
+					$(".c-sidebar").addClass("hide--soft");
+				} else {
+					$(".c-btn-mobile").addClass("open");
+					$(".c-btn-mobile .fa-bars").hide();
+					$(".c-btn-mobile .fa-times").show();
+					$(".c-sidebar").removeClass("hide--soft");
+				}
+			}
+		}),
+		mounted: function() {
+			fade_in_element($('#app'))
+		}
+	};
+script(src=front_end_vars.app_conf.base_url + "/public/assets/js/vue.components.js")
+script(type="text/javascript").
+	var vm = new Vue(vueAppOptions);
+script(type="text/javascript").
+	if (vueAppOptions.data.hot_reload) {
+		console.log("File watcher started");
+		setInterval(function setInterval() {
+			$.ajax({
+				method: 'GET',
+				dataType: 'json',
+				url: '?action=hot_reload',
+				success: function success(response) {
+					if (response.server_start_time != vueAppOptions.data.server_start_time) {
+						//- console.log("Restarting");
+						location.reload();
+					} else {
+						//- console.log("Nothing changed");
+					}
+				}
+			});
+		}, 5000);
+	}
+
