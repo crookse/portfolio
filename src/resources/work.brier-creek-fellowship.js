@@ -17,6 +17,8 @@ module.exports = {
 function BrierCreekFellowship() {
   var CrookseNode = require('crookse-node');
 
+  this.html_document_title = 'Work / Brier Creek Fellowship';
+
   this.front_end_vars = {
     samples: getSamples()
   };

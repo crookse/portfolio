@@ -17,6 +17,8 @@ module.exports = {
 function Work() {
   var CrookseNode = require('crookse-node');
 
+  this.html_document_title = 'Work';
+
   this.front_end_vars = {
     body_classes: 'c-page--work',
     work: CrookseNode.Applications.PortfolioUtils.getWork()

@@ -17,6 +17,8 @@ module.exports = {
 function PayoneerEscrowNoderig() {
   var CrookseNode = require('crookse-node');
 
+  this.html_document_title = 'Work / Payoneer Escrow Noderig';
+
   this.front_end_vars = {
     samples: getSamples()
   };
