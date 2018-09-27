@@ -158,20 +158,21 @@ server.handleHttpRequest = (request, response) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Build the static versions of resources defined in the build configs
-if (ENV_CONF.build_conf.files.length > 0) {
+if (process['crookse/portfolio'].build_conf.files.length > 0) {
   var resources = [];
-  var files = fs.readdirSync(`${ENV_CONF.base_dir}/src/resources`);
+  var files = fs.readdirSync(`${process['crookse/portfolio'].base_dir}/src/resources`);
   files.forEach(function closure_build_static_files(file) {
-    if (ENV_CONF.build_conf.files.indexOf(file) >= 0) {
-      resources.push(require(`${ENV_CONF.base_dir}/src/resources/${file}`));
+    if (process['crookse/portfolio'].build_conf.files.indexOf(file) >= 0) {
+      resources.push(require(`${process['crookse/portfolio'].base_dir}/src/resources/${file}`));
     }
   });
-  const fullyQualifiedOutputDir = `${ENV_CONF.build_conf.output_dir}`;
-  resources.forEach(function closure_build_static_resources(resourceInfo) {
+  const fullyQualifiedOutputDir = `${process['crookse/portfolio'].build_conf.output_dir}`;
+  console.log('\n====== Starting HTML build processes ======');
+  resources.forEach(function closure_build_static_resources(resourceInfo, index) {
     var resource = new resourceInfo.class();
     var htmlFile = CrookseNode.Dictionary.ResourceClassFiles[resource.constructor.name].replace('.js', '.pug');
     var html = Pug.renderFile(
-      `${ENV_CONF.base_dir}/src/templates/resource.${htmlFile}`,
+      `${process['crookse/portfolio'].base_dir}/src/templates/resource.${htmlFile}`,
       getTemplateData(resource, true),
       function closure_renderHtml(error, result) {
         if (error) {
@@ -180,35 +181,55 @@ if (ENV_CONF.build_conf.files.length > 0) {
         result = result.replace(/\{\{\{ /g, '<code>');
         result = result.replace(/ \}\}\}/g, '</code>');
         return result;
-      });
-    try {
-      // TODO: Make the directory if it doesn't exist
-      resourceInfo.static_build.build_as.forEach(function(outputFile) {
+      }
+    );
+    resourceInfo.static_build.build_as.forEach(function(outputFile) {
+      try {
+        console.log(`Rendering ${resource.constructor.name} HTML:`);
         const fullyQualifiedOutputFile = `${fullyQualifiedOutputDir}${outputFile}`;
-        fs.writeFile(`${fullyQualifiedOutputFile}`, html, function(error) {
-          if (error) {
-            console.log(error);
-            return;
-          }
-          console.log(`Rendered ${fullyQualifiedOutputFile}`);
-        });
-      });
-    } catch (error) {
-      console.log(`Error building ${resource.constructor.name} static version:\n  ${error.message}`);
+        console.log(`  target: ${fullyQualifiedOutputFile}`);
+        var writeStatus = fs.writeFileSync(`${fullyQualifiedOutputFile}`, html, {encoding: 'utf8', flag: 'w'});
+        console.log(`Done.`);
+      } catch (error) {
+        console.log(`  ERROR: ${error.message}`);
+      }
+    });
+    // When all of the resources have been built, copy the public directory and favicon file so that
+    // the build output directory can be served as a complete website
+    if ((index + 1) == resources.length) {
+      console.log('================ Finished =================\n');
+      console.log('========== Starting cp processes ==========');
+      const { spawnSync } = require('child_process');
+      var publicDirectorySource = `${process['crookse/portfolio'].base_dir}/public/`;
+      var publicDirectoryTarget = `${fullyQualifiedOutputDir}/public/`;
+      var favIconSource = `${process['crookse/portfolio'].base_dir}/favicon.ico`;
+      var favIconTarget = `${fullyQualifiedOutputDir}/favicon.ico`;
+      console.log(`Performing cp process:`);
+      console.log(`  source: ${publicDirectorySource}`);
+      console.log(`  target: ${publicDirectoryTarget}`);
+      var cpPublicDir = spawnSync('cp', ['-R', publicDirectorySource, publicDirectoryTarget]);
+      console.log(`  code: ${cpPublicDir.status}`);
+      if (cpPublicDir.status != 0) {
+        console.log(Buffer(cpPublicDir.stderr).toString());
+      }
+      console.log(`Done.`);
+      console.log(`Performing cp process:`);
+      console.log(`  source: ${favIconSource}`);
+      console.log(`  target: ${favIconTarget}`);
+      var cpFavicon = spawnSync('cp', ['-R', favIconSource, favIconTarget]);
+      console.log(`  code: ${cpFavicon.status}`);
+      console.log(`Done.`);
+      console.log('================ Finished =================\n');
+      // Are we exiting after the build?
+      if (process['crookse/portfolio'].build_conf.exit_after_build) {
+        console.log('============= EXITING PROCESS =============');
+        console.log('{build_configs}.exit_after_build flag set to true.');
+        console.log('Exiting node process.');
+        console.log('=================== BYE ===================');
+        process.exit();
+      }
     }
   });
-  const { spawn } = require('child_process');
-  var cp = spawn('cp', ['-R', `${ENV_CONF.base_dir}/public/`, `${fullyQualifiedOutputDir}/public/`]);
-  cp.on('close', (code) => {
-    console.log(`cp process for ${ENV_CONF.base_dir}/public to ${fullyQualifiedOutputDir}/public done. Exit code ${code}.`);
-  });
-  cp = spawn('cp', ['-R', `${ENV_CONF.base_dir}/favicon.ico`, `${fullyQualifiedOutputDir}/favicon.ico`]);
-  cp.on('close', (code) => {
-    console.log(`cp process for favicon done. Exit code ${code}.`);
-  });
-  // if (ENV_CONF.build_conf.exit_after_build) {
-  //   process.exit();
-  // }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
